@@ -1,3 +1,35 @@
+
+### 撤销
+1. git checkout -- HEAD <filename>  撤销本地未暂存的修改
+2. git reset --hard <commitid>  **代码回滚**， 本地不保存<commitid>后的所有修改
+3. git reset --soft <commitid>   **代码回滚**，本地编辑仓库保存<commitid>后的所有修改
+4. git revert <commitid> 撤销**某次**提交历史
+
+### 分支
+
+### 标签
+
+
+### ErrorLogs
+
+1. fatal: refusing to merge unrelated histories
+**解决方案**:自[git2.9.0](https://github.com/git/git/blob/master/Documentation/RelNotes/2.9.0.txt#L58-L68)后，git默认不再允许两个没有公共base的仓库进行直接合并，如果在远程GitHub分支创建时选择了README.md，**且在本地有自己的commit历史**，这个时候直接进行git pull(其实是git fetch 和git merge 的简写)在git看来是不合法的，因此，需要pull或者merge时添加--allow-unrelated-histories选项才可以完成合并
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 获取git仓库
 有两种取得git仓库的方法，第一种是在现有目录下导入所有文件到git中，另一种是从一个服务器克隆一个现有的git仓库。
 
@@ -12,6 +44,12 @@
 ![](http://upload-images.jianshu.io/upload_images/6851923-1c83255172efdcb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **注意： 千万不要勾选README.md选项**，多次验证表明勾选了这一项之后，后面会出bug，具体原因暂时不清楚。
+
+
+
+
+
+
 创建完成后复制当前git仓库的url：
 ![](http://upload-images.jianshu.io/upload_images/6851923-883e200e25ab0194.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -151,6 +189,10 @@ git log 有许多选项可以搜寻所要找的提交，一个常用的选项是
 -----
 
 ### 撤销操作
+**结论**:
+
+
+
 任何一个阶段，你都有可能想要撤消某些操作，有的撤销操作是不可逆的，这是在使用 Git 的过程中因误操作而导致之前的工作丢失的少有的几个地方之一。
 有时我们提交完了发现漏掉了几个文件没有添加，或者提交信息写错了。 此时，可以运行带有 `--amend` 选项的提交命令尝试重新提交。
 `git commit --amend`
@@ -218,8 +260,10 @@ revert是撤销某次操作，此次操作之前的commit都会被保留，而re
 |git checkout|文件层面|舍弃工作目录中的更改|
 |git revert|提交层面|在公共分支上回滚更改|
 |git revert|文件层面|无|
-
 -----
+
+
+### 
 
 *参考资料*：
 - 微信公众号：git小助手
