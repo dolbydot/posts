@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_8d5l8fzk5b87iudi.css">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: black;
+        }
+
+        .layout {
+            background: white;
+            box-sizing: border-box;
+            width: 600px;
+            height: 250px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: .8em;
+        }
+
+        .header {
+            overflow: auto;
+            height: 40px;
+            padding-bottom: .4em;
+        }
+
+        .header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        p,
+        span {
+            font-size: 0.9rem;
+        }
+
+        .header span {
+            float: left;
+            line-height: 40px;
+        }
+
+        .header span:not(:first-of-type) {
+            padding-left: .4em;
+        }
+
+        .time,
+         .footer{
+            color: #cdcdcd;
+        }
+
+        .main {
+            margin-right: 166px;
+            line-height: 1.9;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1em;
+        }
+
+        .sidebar img {
+            width: 160px;
+            border-radius: .4em; 
+        }
+
+        .footer {
+            line-height: 22px;
+            margin-top: .6em;
+        }
+
+        .footer span {
+            display: inline-block;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: red;
+            border: 1px solid red;
+            border-radius: 5px;
+            padding: 0 .2em;
+            margin-top: .8em;
+            margin-right: .2em;
+        }
+
+        .footer span:not(:first-of-type) {
+            padding-left: 27px;
+            padding-right: 10px;
+            background-image: url('./sprite.png');
+            background-repeat: no-repeat;
+        }
+
+        .like {
+            background-position: 0 -25px;
+        }
+
+        .praise {
+            background-position: 0 -50px;
+        }
+
+        .money {
+            background-position: 0 -75px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+
+        <div class="sidebar">
+            <img src="http://xqxtp.com/uploads/allimg/150209/5-1502091P200.jpg" alt="headshot2" class="float-photo">
+        </div>
+
+        <div class="header">
+            <span><img src="http://img.qq1234.org/uploads/allimg/140526/3_140526101109_12.jpg" alt="headshot1" class="headshot">         </span>            
+            <span class="author">乐之读</span>
+            <span class="time">昨天 22:48</span>
+        </div>
+
+        <div class="main">
+            <h3>5个月成为简书签约作者后，迟到了8个月的感想</h3>
+            <p>
+                去年7月5日在简书发了第一篇文章，12月底成为签约作者，一次申请通过，5个多月的时间，不算最快，也不算慢，本来倒是可以发文总结自我吹嘘一番。结果却晚了8个月，连吹牛的时效性都...
+            </p>
+        </div>
+
+        <div class="footer">
+            <span href="" class="link"><a href="">谈写作</a></span>
+            <span class="view">111121</span>
+            <span class="like">882</span>
+            <span class="praise">300</span>
+            <span class="money">4</span>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
