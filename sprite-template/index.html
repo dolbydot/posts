@@ -11,6 +11,7 @@
         * {
             padding: 0;
             margin: 0;
+            box-sizing: border-box;
         }
 
         body {
@@ -19,26 +20,32 @@
 
         .layout {
             background: white;
-            box-sizing: border-box;
             width: 600px;
-            height: 250px;
             position: absolute;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             padding: .8em;
+            border-radius: 5px;
         }
 
         .header {
             overflow: auto;
+        }
+
+        .header span {
+            float: left;
             height: 40px;
-            padding-bottom: .4em;
+            line-height: 40px;
         }
 
         .header img {
             width: 40px;
-            height: 40px;
             border-radius: 50%;
+        }
+
+        .header span:not(:first-of-type) {
+             padding-left: .4em; 
         }
 
         p,
@@ -46,23 +53,23 @@
             font-size: 0.9rem;
         }
 
-        .header span {
-            float: left;
-            line-height: 40px;
-        }
-
-        .header span:not(:first-of-type) {
-            padding-left: .4em;
-        }
-
         .time,
-         .footer{
+        .footer {
             color: #cdcdcd;
         }
 
         .main {
+            margin-top: .4em;
             margin-right: 166px;
-            line-height: 1.9;
+            line-height: 1.8;
+        }
+
+        .main p {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sidebar {
@@ -74,11 +81,12 @@
 
         .sidebar img {
             width: 160px;
-            border-radius: .4em; 
+            border-radius: .4em;
+            vertical-align: top;
         }
 
         .footer {
-            line-height: 22px;
+            line-height: 25px;
             margin-top: .6em;
         }
 
@@ -126,14 +134,14 @@
 
         <div class="header">
             <span><img src="http://img.qq1234.org/uploads/allimg/140526/3_140526101109_12.jpg" alt="headshot1" class="headshot">         </span>            
-            <span class="author">乐之读</span>
+            <span class="author">_Dot</span>
             <span class="time">昨天 22:48</span>
         </div>
 
         <div class="main">
-            <h3>5个月成为简书签约作者后，迟到了8个月的感想</h3>
+            <h3>程序员冷笑话两则</h3>
             <p>
-                去年7月5日在简书发了第一篇文章，12月底成为签约作者，一次申请通过，5个多月的时间，不算最快，也不算慢，本来倒是可以发文总结自我吹嘘一番。结果却晚了8个月，连吹牛的时效性都...
+                ~一个程序员下班之前收到媳妇的短信：下班回来的路上买两屉包子，如果碰到卖西瓜的，就买一个。该程序猿只带回家一个包子，媳妇问为什么，答曰：“因为路上碰到卖西瓜的了”。<br /> ~程序员问科比：“你为什么这么成功？”科比：“你知道洛杉矶早晨四点钟是什么样子吗？”程序员：“知道，一般那时候我还没睡，怎么啦？”科比：“……没事”
             </p>
         </div>
 
