@@ -225,6 +225,52 @@
 ![](http://upload-images.jianshu.io/upload_images/6851923-7cf97d58a3f1e754.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 -----
+### 多行文本溢出加 ...如何实现?
+以下样式可让段落过长时显示...，如果想提早出现...可给元素设置width或max-width属性。
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+       <style>  
+        p{
+            /*  设置文本框宽度及边框  */
+            width: 300px;
+            border: 1px solid black;
+            /*  将对象作为弹性伸缩盒子模型显示  */
+            display: -webkit-box;
+            /*  设置或检索伸缩盒对象的子元素的排列方式  */
+            -webkit-box-orient: vertical;
+            /*  设置显示的文本行数  */
+            -webkit-line-clamp: 3;
+            /*  设置溢出元素内容区的内容隐藏  */
+            overflow: hidden;
+            /*  设置文本溢出时显示省略号代表被隐藏的文本  */
+            text-overflow: ellipsis;
+        }
+        
+    </style> 
+</head>
+
+<body>
+    <p>
+        唐僧：你想要啊？你要是想要的话你就说话嘛，你不说我怎么知道你想要呢，虽然你很有诚意地看着我，可是你还是要跟我说你想要的。
+  难道你真的想要吗？你想要的话我会给你的，你想要我怎么可能不给你呢？不可能你想我不给你，你不想要我却偏给你的。
+  大家讲道理嘛！现在我数三下，你要说清楚你要不要……你真的想要吗？那你就拿去吧！你不是真的想要吧？
+    </p>
+</body>
+
+</html>
+```
+
+![](http://upload-images.jianshu.io/upload_images/6851923-790d9b9a4f29a638.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+
+-----
 ### px, em, rem 有什么区别
 px: 绝对/固定单位，通常情况下浏览器默认文字大小为16px
 em: 相对单位，表示当前字体大小是父容器字体大小的多少倍
