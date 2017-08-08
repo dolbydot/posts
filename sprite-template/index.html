@@ -33,6 +33,12 @@
             overflow: auto;
         }
 
+        .header::after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+
         .header span {
             float: left;
             height: 40px;
@@ -45,7 +51,7 @@
         }
 
         .header span:not(:first-of-type) {
-             padding-left: .4em; 
+            padding-left: .4em;
         }
 
         p,
