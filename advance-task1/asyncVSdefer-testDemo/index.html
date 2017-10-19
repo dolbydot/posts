@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>async&defer</title>
+    <!-- <script defer>alert('内联脚本')</script> 只有此脚本和外联样式表时，先执行此脚本，在执行样式表内容，也就是内联脚本中async属性无效 -->
+    <script async>
+        alert('内联脚本')
+    </script>
+    <!-- 只有此脚本和外联样式表时，先执行此脚本，在执行样式表内容，也就是内联脚本中defer属性无效    -->
+
+    <script src="index1.js" async></script>
+    <script src="index2.js" defer></script>
+    <script src="index3.js" async></script>
+    <script src="index4.js" defer></script>
+    <link rel="stylesheet" href="index.css">
+    <!-- 在页面中有2个defer脚本，2个async脚本的情况下，
+        这四个脚本的执行顺序是无序的，
+        但单看defer或单看async，他们都是有序的，且这四个脚本文件都会在DOMContentLoaded事情之前执行完毕，
+        load事件永远最后触发。  -->
+    <!-- 浏览器在解析HTML文件时，遇上没有设置defer或async属性的脚本，浏览器读到该脚本就加载并执行，脚本会阻塞其后内容的执行；
+遇上设有async属性的脚本，会在HTML解析过程中下载该脚本，并在完成下载后暂停HTML的解析来执行这个异步脚本，直到执行完成后再继续HTML的解析；
+遇上设有defer属性的脚本，会在HTML解析过程中下载该脚本，在HTML解析完成后才执行该文件。延迟脚本按照它们在文档中出现的顺序执行。  -->
+</head>
+
+<body>
+    <img src="fang.png" alt="">
+    <h1>hello world</h1>
+    <img src="isView.png" alt="">
+    <img src="asyncVSdefer.png" alt="">
+</body>
+
+</html>
