@@ -1,3 +1,5 @@
+## Ajax、server-mock的使用
+
 ### ajax 是什么？有什么作用？
 1. AJAX全称为“Asynchronous JavaScript and XML”（异步JavaScript和XML），
 是一种技术的泛称，可以在不重新加载整个网页的情况下向服务器请求额外的数据，实现对网页的某部分进行更新，带来良好的用户体验。
@@ -31,7 +33,7 @@ AJAX在浏览器与web服务器之间使用异步数据传输（HTTP请求）从
 ### 前后端开发联调需要注意哪些事情？后端接口完成前如何 mock 数据？
 在开发之前，前后端需要写作商定数据和接口的各项细节，后端负责提供数据，前端负责展示数据（根据数据负责页面的开发）
 - 前后端开发联调注意事项：
-    - URL：借口名称
+    - URL：接口名称
     - 发送请求的参数和格式(get/post)
     - 数据响应的数据格式(数组/对象)
     - 根据前后端约定，整理接口文档
@@ -66,6 +68,67 @@ btn.addEventListener('click', function () {
 })   
 ```
 
+### 封装ajax
+```
+function ajax() {
+  var url = opts.url
+  var data = opts.data || {}
+  var type = opts.type || 'GET'
+  var dataType = opts.dataType || 'json'
+  var onsuccess = opts.onsuccess || function () { }
+  var onerror = opts.onerror || function () { }
+
+  var dataStr = []
+  for (var key in data) {
+    dataStr.push(key + '=' + data[key])
+  }
+  dataStr = dataStr.join('&')
+
+  if (type === 'GET') {
+    url += '?' + dataStr
+  }//get方法将字符串放在url末尾
+
+  var xhr = new XMLHttpRequest()
+  xhr.open(type, url, true)
+  xhr.onload = function () {
+    if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+      if (dataType === 'json') {
+        onsuccess(JSON.parse(xhr.responseText))
+      } else {
+        onsuccess(xhr.responseText)
+      }
+    } else {
+      onerror()
+    }
+  }
+  xhr.onerror = onerror
+
+  if (type === 'POST') {
+    xhr.send(dataStr)//post方法将字符串放在send中
+  } else {
+    xhr.send()//get的send内容
+  }
+}
+
+ajax({
+  url: 'http://api.jirengu.com/weather.php',
+  data: {
+    city: '北京'
+  },
+  onsuccess: function (ret) {
+    console.log(ret)
+  },
+  onerror: function () {
+    console.log('服务器异常')
+  }
+})
+```
 ### 实现加载更多的功能，后端在本地使用server-mock来模拟数据
 - [代码地址](https://github.com/dolbydot/task/blob/master/advance-task12/ajax/ajax.html)
 - [router.js](https://github.com/dolbydot/task/blob/master/advance-task12/ajax/router.js)
+- [效果](https://dolbydot.github.io/task/advance-task12/ajax/ajax.html)
+
+-----
+**参考资料**
+- [*Ajax*](http://book.jirengu.com/fe/%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80/Javascript/ajax.html)
+- [*推荐阅读：你真的会使用XMLHttpRequest吗？*](https://segmentfault.com/a/1190000004322487)

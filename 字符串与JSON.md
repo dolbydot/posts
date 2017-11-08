@@ -89,55 +89,58 @@ console.log(palindrome('abcdedcba'));
 
 ### 写一个函数，统计字符串里出现出现频率最多的字符
 ```
-var str = 'fasjlfjlaskjopiausvjkalvjkajfdasjfoiasjfdlaksjfklasj';
-var res10 = str.split('')
-    .reduce(function (acc, curr) {
-        if (acc[curr]) {
-            acc[curr]++;
-            return acc;
+function maxCountItem(str) {
+    var res = str.split('')
+        //acc即初始空对象，意为存储，当对象当前元素curr有值时值+1，没有值时创建curr值为1，返回对象
+        .reduce(function (acc, curr) {
+            if (acc[curr]) {
+                acc[curr]++
+                return acc
+            } else {
+                acc[curr] = 1
+                return acc
+            }
+        }, {})
+
+    var max = ['', 0]
+    for (var key in res) {
+        if (res[key] > max[1]) {
+            max = [key, res[key]]
         }
-        else {
-            acc[curr] = 1;
-            return acc;
-        }
-    }, {});
-var max = ['', 0];
-for (var key in res10) {
-    if (res10[key] > max[1]) {
-        max = [key, res10[key]]
     }
+    return max[0]
 }
-console.log(max[0]); //j
+
+console.log(maxCountItem('fasjlfjlaskjopiausvjkalvjkajfdasjfoiasjfdlaksjfklasj'))//j
 ```
 ### 写一个camelize函数，把my-short-string形式的字符串转化成myShortString形式的字符串，如
 ```
-function camelize(a){
-    return a.split('-')
-    .map(function(value,index){
-        if(index==0){
-            return value;
-        }else{
-            return value[0].toUpperCase()+value.substring(1);
+function camelize(str) {
+    return str.split('-').map(function (val, index) {
+        if (index === 0) {
+            return val
+        } else {
+            return val[0].toUpperCase() + val.substring(1)
         }
-    })
-    .join('');
+    }).join('')
 }
-console.log(camelize("background-color"));
-console.log(camelize("list-style-image"));
+
+var str = 'my-short-string'
+console.log(camelize(str))//myShortString
 ```
 
 ### 写一个 ucFirst函数，返回第一个字母为大写的字符
 ```
-function ucFirst(str){
- var a=str[0].toUpperCase();
- var b=str.substring(1);
- return a+b;
+function ucFirst(str) {
+    return str[0].toUpperCase() + str.substring(1)
 }
-console.log(ucFirst("hunger")); //Hunger
+
+console.log(ucFirst('string'))//String
 ```
 
 ### 写一个函数truncate(str, maxlength), 如果str的长度大于maxlength，会把str截断到maxlength长，并加上...，如
 ```
+//方法一
 function truncate(str, maxlength){
 if(str.length>maxlength){
     var arr=str.split('').slice(0,maxlength);
@@ -147,6 +150,16 @@ if(str.length>maxlength){
     console.log(str);
 }
 }
+
+//方法二
+// function truncate(str, maxlength) {
+//     if (str.length > maxlength) {
+//         return str.substring(0, maxlength) + '...'
+//     } else {
+//         return str
+//     }
+// }
+
 truncate("hello, this is hunger valley,", 10); //hello, thi...
 truncate("hello world", 20); //hello world
 ```

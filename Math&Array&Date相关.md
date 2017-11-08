@@ -139,6 +139,91 @@ console.log(newArr) //[3, 2]
 console.log(arr) //[3, -1,  2,  '饥人谷', true]
 ```
 
+### 写一个函数sperate(str,num)，str是要分割的字符串，num是以多少个字符为单位分割
+如sperate('abcdefg',3)==>[abc,def,g]
+```
+function sperate(str, num) {
+    var res = []
+    for (var i = 0; i < str.length; i++) {
+        res.push(str.slice(i, i + num))
+        i += num - 1
+    }
+    return res
+}
+console.log(sperate('abcdefg', 3))//[ 'abc', 'def', 'g' ]
+console.log(sperate('hello world  ', 3))//[ 'hel', 'lo ', 'wor', 'ld ', ' ' ]
+```
+
+### 单个数组去重
+```
+var arr = [4, 5, 6, 6, 7, 7, 8, 9]
+//ES6 Set方法
+console.log(Array.from(new Set(arr)))//[4, 5, 6, 7, 8, 9]
+```
+
+### 两个数组去重并排序
+```
+function distinctBySortArray(arr1, arr2) {
+    //copy arr1生成一个无重复项的新数组result
+    var result = Array.from(new Set(arr1.concat()))
+    //遍历arr2中的每一项
+    for (var i = 0; i < arr2.length; i++) {
+        //新数组result中没有与arr2[i]重复的项则将arr2[i]添加到result末尾
+        if (result.indexOf(arr2[i]) === -1) {
+            result.push(arr2[i])
+        }
+    }
+    return result.sort(compare)
+}
+
+function compare(val1, val2) {
+    return val1 - val2
+}
+
+var arr1 = [1, 2, 39, 9, 8, 3, 6, 9]
+var arr2 = [1, 7, 8, 0, 0]
+
+console.log(distinctBySortArray(arr1, arr2))//[ 0, 1, 2, 3, 6, 7, 8, 9, 39 ]
+console.log(arr1)//[1, 2, 39, 9, 8, 3, 6, 9]
+console.log(arr2)//[1, 7, 8, 0, 0]
+```
+
+### 有两个从小到大已经排序完成的数组，长度分别是n和m，单个数组的不存在重复元素，问如何在m+n次操作下，完成去重，得到一个完整的非重数组。
+```
+function distinctBySortArray(arr1, arr2) {
+    var n = arr1.length
+    var m = arr2.length
+    var result = []
+    for (var i = 0, j = 0; i < n && j < m;) {
+        var temp1 = arr1[i]
+        var temp2 = arr2[j]
+        if (temp1 < temp2) {
+            i++
+            result.push(temp1)
+        } else if (temp1 === temp2) {
+            j++
+        } else if (temp1 > temp2) {
+            j++
+            result.push(temp2)
+        }
+    }
+    if (i < n) {
+        return result.concat(arr1.slice(i, n))
+    }
+    if (j < m) {
+        return result.concat(arr2.slice(j, m))
+    }
+    return result
+}
+
+var arr1 = [1, 2, 3, 6, 9]
+var arr2 = [1, 6, 7, 8, 9, 13]
+
+console.log(distinctBySortArray(arr1, arr2))//[ 1, 2, 3, 6, 7, 8, 9, 13 ]
+console.log(arr1)//[1, 2, 3, 6, 9]
+console.log(arr2)//[1, 6, 7, 8, 9, 13]
+```
+
 # Date 
 ### 写一个函数getChIntv，获取从当前时间到指定日期的间隔时间
 ```
@@ -227,3 +312,11 @@ var str = friendlyDate('1311111119999'); //  6年前（括号里的字符串值�
 var str2 = friendlyDate('1503190042273'); //1天前
 console.log(str, str2);
 ```
+
+-----
+*参考资料*
+- [*也谈JavaScript数组去重*](https://www.toobug.net/article/array_unique_in_javascript.html)
+- [*数组去重*](https://www.zhihu.com/question/29558082)
+- [*js数组合并与去重*](http://www.cnblogs.com/raincha/p/4848433.html)
+- [*数组合并、去重、排序*](http://www.cnblogs.com/wang715100018066/p/6200567.html)
+- [*js数组去重*](https://github.com/hanzichi/underscore-analysis/issues/9)

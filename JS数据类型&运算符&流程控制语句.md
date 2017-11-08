@@ -1,22 +1,22 @@
 ### JavaScript 定义了几种数据类型? 哪些是原始类型?哪些是复杂类型?原始类型和复杂类型的区别是什么?
-1. 六种数据类型，分别是Undefined,Null,Boolean,Number,String,Object，其中Object是复杂类型，其他五种都是简单类型，也称为原始类型。
+1. 七种数据类型，分别是Undefined,Null,Boolean,Number,String,Symbol,Object，其中Object是复杂类型，其他六种都是简单类型，也称为原始类型。
 
 - Undefined:  Undefined类型只有一个值，即特殊的undefined，在使用var声明变量但未对其初始化时这个变量的值就是undefined，引入这个值是为了区分空对象指针与未经初始化的变量。
 - Null:Null也是只有一个值的数据类型，这个特殊的值是null，null表示空对象指针，这也正是使用typeof操作符检测null值时返回“object”的原因（其实这就是一个bug无疑）
 - Boolean:使用得最多的一种类型，只有两个值true/false，true不一定为1，false也不一定为0，它执行的是Boolean转换，可以对任何数据类型的值调用Boolean()函数，而且总会返回一个Boolean值，具体返回什么值取决于转换值的数据类型及其实际值。
 - Number:使用IEEE754格式来表示整点和浮点数值。
 - String:由零或多个16位Unicode字符组成的字符序列，即字符串。字符串外包裹单引号和双引号都可以。
-- Object:ECMAScript中的对象是一种数据与功能的集合，对象课通过执行new操作符后跟要创建的对象类型的名称来创建，而创建Object类型的实例并为其添加属性和／或方法就可以创建自定义对象。Object类型是所有它的实例的基础。
+- Object:ECMAScript中的对象是一种数据与功能的集合，对象可通过执行new操作符后跟要创建的对象类型的名称来创建，而创建Object类型的实例并为其添加属性和／或方法就可以创建自定义对象。Object类型是所有它的实例的基础。
 
 2. 区别
 - 基本类型变量存的是值，复杂类型的变量存的是内存地址。
-- 基本类型在赋值的时copy值，复杂类型在赋值的时候只copy地址，不copy值。
+- 基本类型在赋值时copy值，复杂类型在赋值时只copy地址，不copy值。
 
 ### typeof和instanceof的作用和区别?
 1. 作用：
 - typeof:检测给定变量的数据类型并返回字符串值，该字符串值用来说明运算数的数据类型。typeof是一个操作符而不是函数，通过typeof操作符来区分函数和其他对象是有必要的。
-返回的值有：string、boolean、number、undefined、string、function。
-- instance:判断某个引用类型的值具体是什么类型的对象，如果变量是给定的引用类型就返回true，反之返回false。
+返回的值有：string、boolean、number、undefined、object、function。
+- instanceof:判断某个引用类型的值具体是什么类型的对象，如果变量是给定的引用类型就返回true，反之返回false。
 所有引用类型的值都是Object的实例，instanceof操作符检测引用类型的值和Object构造函数时始终返回true，检测基本类型的值时始终返回false。
 2. 区别：
 - typeof用于确定一个值是字符串、数值、布尔值还是undefined，也可用于判断function，但不能用来判断对象类型的值和null基本类型的值，因为都会返回Object。typeof也可用来判断变量是否存在。
@@ -86,7 +86,6 @@ var num25 = parseFloat("3.125e7");  //31250000
 ```
 var result1 = ("55" == 55);  //true，转换后相等
 var result2 = (null == undefined);  //true
-
 var result3 = ("55" === 55);  //false，数据类型不同所以不相等
 var result4 = (null === undefined);  //false
 ```
@@ -204,21 +203,22 @@ var val = typeof a + b || c >0
 console.log(val);  //"number2"  原因：typeof优先级16，+优先级13，||优先级5，>号优先级11，所以先运算typeof a+b，得到"number2"字符串值，因为是非空字符串所以布尔属性值为true，逻辑或运算中，如果第一个操作数求值为true就不用对第二个操作数求值，所以结果直接返回"number2"字符串值。
 ```
 ```
-var d = 5;
-var data = d ==5 && console.log('bb')；
+var d = 5；
+var data = d == 5 && console.log('bb')；
 console.log(data);  //bb undefined undefined 
-原因：=为赋值，优先级3，==等号优先级10，&&优先级6，所以先运算==，得到d==5，值为true，接着执行console.log打印出'bb',没有指明返回值所以返回undefined，接着做逻辑与运算，true&&undefined返回undefined并赋值给data，最后打印出data为undefined，所以最终结果是控制台打印出字符串bb和两个undefined。
+//原因：=为赋值，优先级3，==等号优先级10，&&优先级6，所以先运算==，得到d==5，值为true，接着执行console.log打印出'bb',没有指明返回值所以返回undefined，接着做逻辑与运算，true&&undefined返回undefined并赋值给data，最后打印出data为undefined，所以最终结果是控制台打印出字符串bb和undefined。
 ```
 ```
 var d = 5;
 var data2 = d = 0 || console.log('haha');
-console.log(data2);  //haha undefined undefined 
-原因：||优先级最高，先执行第一个运算数0，即false，所以继续看第二个运算数，首先打印出haha字符串，返回undefined，接着false与undefined做逻辑或运算得到undefined（第一个运算数是false的话直接返回第二个运算数的值），将undefined赋值给d，将d赋值给data2，打印出data2位undefined，所以最终结果是控制台打印出字符串haha和两个undefined。
+console.log(data2);  //haha undefined
+//原因：||优先级最高，先执行第一个运算数0，即false，所以继续看第二个运算数，首先打印出haha字符串，返回undefined，接着false与undefined做逻辑或运算得到undefined（第一个运算数是false的话直接返回第二个运算数的值），将undefined赋值给d，将d赋值给data2，打印出data2为undefined，所以最终结果是控制台打印出字符串haha和undefined。
+
 ```
  ```
 var x = !!"Hello" + (!"world", !!"from here!!");
-console.log(x);  //
-原因：圆括号优先级最高，逗号优先级最低，所以会先执行括号里的内容并返回表达式最后一项，!后跟非空字符串返回false，即!"world"返回false(这一项可忽略)，!!即同时使用两个逻辑非操作符，会模拟Boolean()转型函数的行为，第一个!返回一个布尔值，第二个逻辑非操作对该布尔值求反，即 !!"from here!!"和!!"Hello"结果都为true，所以`var x = !!"Hello" + (!"world", !!"from here!!");`可改写为`var x = true+true;`调用toString()方法取得相应字符串值并转换，得到`var x = 2;`,所以打印出x值为2，没有指明返回值则返回undefined。
+console.log(x);  //2
+//原因：圆括号优先级最高，逗号优先级最低，所以会先执行括号里的内容并返回表达式最后一项，!后跟非空字符串返回false，即!"world"返回false(这一项可忽略)，!!即同时使用两个逻辑非操作符，会模拟Boolean()转型函数的行为，第一个!返回一个布尔值，第二个逻辑非操作对该布尔值求反，即 !!"from here!!"和!!"Hello"结果都为true，所以`var x = !!"Hello" + (!"world", !!"from here!!");`可改写为`var x = true+true;`调用toString()方法取得相应字符串值并转换，得到`var x = 2;`,所以打印出x值为2，没有指明返回值则返回undefined。
 ```
 
 **参考资料：**

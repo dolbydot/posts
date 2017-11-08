@@ -1,3 +1,5 @@
+## JS相关概念总结
+
 ### 简单介绍JavaScript的发展历史
 JavaScript因互联网而生，回顾它的历史要从浏览器的历史讲起。
 - 1990年底，欧洲核能研究组织科学家Tim Berners-Lee发明了万维网（World Wide Web），但只能在操作系统的终端里浏览和操作，非常不方便。
@@ -82,7 +84,7 @@ async和defer用于异步或延迟加载脚本。
 ```
 以上代码中虽然我们把`<script>`放在了`<head>`中，但其中包含的脚本文件将延迟到浏览器遇到`</html>`后再执行。HTML5规范要求脚本按照它们出现的先后顺序执行，即第一个延迟脚本先于第二个延迟脚本执行，而这两个脚本会先于DOMContentLoaded事件执行，但**现实中**延迟脚本并不一定会按照顺序执行，也不一定会在DOMContentLoaded事件触发前执行，所以一个文档里最好只包含一个延迟脚本。
 
-![async-VS-defer](http://upload-images.jianshu.io/upload_images/6851923-4b65d97fad9e74e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![async-VS-defer-图片来自文章最底部参考资料](http://upload-images.jianshu.io/upload_images/6851923-4b65d97fad9e74e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 上图的意思是：浏览器在解析HTML文件时，遇上没有设置defer或async属性的脚本，浏览器读到该脚本就加载并执行，脚本会阻塞其后内容的执行；
 遇上设有async属性的脚本，会在HTML解析过程中下载该脚本，并在完成下载后暂停HTML的解析来执行这个异步脚本，直到执行完成后再继续HTML的解析；
@@ -105,6 +107,7 @@ async和defer用于异步或延迟加载脚本。
 
 5. 注意事项：
 如果一个外部脚本依赖于另一外部脚本，请将它们标记为defer，并按它们被声明的顺序执行。
+浏览器发起资源请求request的时间都比较接近，除非DOM树非常长，时间可能会有明显差别。但资源响应时间responsive的时间差别较大，浏览器会根据情况作出优化，图片字体等优先级较低，一般等到最后才加载完成（比js还久）。
 
 ### repaint 和 reflow
 - 什么是repaint和reflow：
@@ -134,3 +137,7 @@ async和defer用于异步或延迟加载脚本。
     - 设置`box-sizing: border-box;`把标准盒模型转换为IE盒模型，告诉浏览器去理解你设置的边框和内边距的值是包含在width内的。设置后，即使padding或者border发生了改变，盒子宽高不会发生变化，只会重绘，不会回流。
 
 **关于浏览器渲染更详细内容可参考**[我的博客第六节](http://www.jianshu.com/p/1aa5d2d3a44a)
+
+-----
+**参考资料**
+- [*async vs defer attributes*](http://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html)

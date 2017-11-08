@@ -1,3 +1,4 @@
+>20170806晚 ——本次更新，删除了一些最基本的git操作，添加了pull失败的解决办法
 
 ### 撤销
 1. git checkout -- HEAD <filename>  撤销本地未暂存的修改
@@ -44,10 +45,6 @@
 ![](http://upload-images.jianshu.io/upload_images/6851923-1c83255172efdcb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **注意： 千万不要勾选README.md选项**，多次验证表明勾选了这一项之后，后面会出bug，具体原因暂时不清楚。
-
-
-
-
 
 
 创建完成后复制当前git仓库的url：

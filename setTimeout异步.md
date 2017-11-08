@@ -1,3 +1,8 @@
+### 简单解释单线程、任务队列的概念
+单线程：JavaScript是一个单线程语言,浏览器只会分配一个js引擎线程来解析和执行js同步代码。即任务是串行的，后一个任务需要等待前一个任务的执行。
+
+任务队列：所有同步任务都在主线程上执行，形成一个执行栈。主线程之外，还存在一个“任务队列”，指定过回调函数的事件发生时就会进入“任务队列”，等待主线程读取。线程把栈中任务做完之后，就会来看“任务队列”中的事件，“任务队列”是一个先进先出的数据结构，排在前面的事件优先被主线程读取。读取过程基本上是自动的，只要执行栈一清空，“任务队列”上第一位的事件就自动进入主线程。但是，如果包含“定时器”，主线程首先要检查一下执行时间，某些事件只有到了规定的时间，才能返回主线程。主线程从“任务队列”中读取事件，这个过程是循环不断的，所以整个的运行机制又称为“Event Loop”。
+
 setTimeout：N毫秒之后执行某个函数，一次一个ID，实际延迟时间比N毫秒久，会在其他的运行完了以后最后来看setTimeout的内容，可想象为一个闹钟，设定了30秒后吃饭，30秒之后闹钟响了，但当时还在写作业，那么会等作业写完之后再来看闹钟的内容并去执行它。
 setInterval：每隔N毫秒执行某个函数，只有一个ID
 
@@ -169,3 +174,33 @@ for (var i = 0; i < 5; i++) {
 
 </html>
 ```
+面试题
+```
+var startTime = +(new Date()),endTime;
+setTimeout(function(){
+    endTime = +(new Date());
+    console.log(1);
+    console.log(endTime - startTime);
+    },3000);
+setTimeout(function(){
+    endTime = +(new Date());
+    console.log(2);
+    console.log(endTime - startTime);
+    },2000);
+while(+(new Date()) - startTime < 5000){}
+console.log(+(new Date()) - startTime);
+```
+请问alert(1)和alert(2)的先后顺序和时间间隔。
+
+5s钟的同步执行完之后，开始执行setTimeout异步代码，因为第二个插入的时间间隔早，先执行。
+
+![](http://upload-images.jianshu.io/upload_images/6851923-e49b771d95a1b187.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+因为5s时间超过了3s，所以两个函数几乎同时执行。如果同步时间是1s，那就是第2s之后执行第二个函数，第3s后执行第一个函数，代码运行总时长3s多一点点
+
+![](http://upload-images.jianshu.io/upload_images/6851923-c2c8769bb9a5f3c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+setTimeout(..) 并没有把你的回调函数挂在事件循环队列中。它所做的是设 定一个定时器。
+当定时器到时后,环境会把你的回调函数放在事件队列中,如果这时候事件循环中已经有 20 个项目了会怎样呢?你的回调就会等待,定时器只能确保你的回调函数不会在指定的 时间间隔之前运行,但可能会在那个时刻运行,也可能在那之后运行,要根据事件队列的 状态而定(PS: 这就是造成定时器不准确的缘由)。
+
+setTimeout(..0)(hack)进行异步调度,基本上它的意思就是把这个函数插入到当前事件循环队列的结尾处。

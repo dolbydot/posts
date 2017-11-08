@@ -40,13 +40,13 @@ colors[99] = 'white'; //在位置99添加一项
 console.log(colors.length); //打印数组长度 100
 ```
 ### 检测数组
-只有一个全局执行环境
+- 只有一个全局执行环境
 ```
 if (value instanceof Array) {
     //对数组执行某些操作
 }
 ```
-不区分在哪个全局执行环境，只判断是不是数组
+- 不区分在哪个全局执行环境，只判断是不是数组
 ```
 if (Array.isArray(value)) {
     //对数组执行某些操作
@@ -57,6 +57,32 @@ if (Array.isArray(value)) {
 var colors = ['red', 'blue', 'green'];
 Array.isArray(colors); //true
 ```
+- 还有另外一个不是很常用的
+```
+[].constructor===Array;//true
+```
+- 适用于所有类型检测方法
+```
+var arr=new Array();
+Object.prototype.toString.call(arr);//"[object Array]"
+```
+Object.prototype.toString.call()适用于所有类型，有代码如下：
+```
+var type = function (o){
+  var s = Object.prototype.toString.call(o);
+  return s.match(/\[object (.*?)\]/)[1].toLowerCase();
+};
+
+type({}); // "object"
+type([]); // "array"
+type(5); // "number"
+type(null); // "null"
+type(); // "undefined"
+type(/abcd/); // "regex"
+type(new Date()); // "date
+```
+
+
 ### 方法
 方法就是函数，函数主要看三个点：函数名、参数、返回值，统称为函数签名。
 #### 转换方法
@@ -192,8 +218,8 @@ console.log(values); // [9, 8, 3, 1, -6]
 ```
 
 #### 操作方法
-- [concat()]()会创建当前数组的一个副本，然后将接收到的参数的每一项作为新增项添加到这个副本末尾，返回新构建的数组，没有给concat()方法穿入参数的情况下它只会复制当前数组并返回副本。
-- [slice()]()基于当前数组中的若干个项创建一个新数组，接受一到两个参数，即返回项的起始位置和结束为止但不包括结束位置的项，只有一个参数的情况下返回该参数指定位置开始到当前数组末尾的所有项。
+- [concat()]()会创建当前数组的一个副本，然后将接收到的参数的每一项作为新增项添加到这个副本末尾，返回新构建的数组，没有给concat()方法传入参数的情况下它只会复制当前数组并返回副本。
+- [slice()]()基于当前数组中的若干个项创建一个新数组，接受一到两个参数，即返回项的起始位置和结束位置（不包括结束位置）的项，只有一个参数的情况下返回该参数指定位置开始到当前数组末尾的所有项。
 
 concat()和slice()方法的返回新数组，即原数组不会被改变。
 ```
@@ -206,14 +232,14 @@ var color4 = colors.slice(2, 3);
 console.log(colors1); //["red", "green", "blue", "pink"]
 console.log(colors2); //["red", "green", "blue", "pink", "yellow", "black", "brown"]
 console.log(color3); //["green", "blue", "pink"]
-console.log(color4); //["green", "blue", "pink"]
+console.log(color4); //["blue"]
 console.log(colors); //["red", "green", "blue", "pink"]
 ```
 - [splice()]()方法
 splice()方法主要用途为向数组中插入项，该方法始终都会返回一个数组，该数组中包含从原始数组中删除的项（如果没有删除任何项则返回一个空数组），此方法会改变原始数组。
 以下是用法：
     - 删除：可删除任意数量的项，2个参数，要删除的第一项的位置（包括第一项）和要删除的项数。
-    - 插入：可向指定位置插入任意数量的项，最少3个参数，起始位置（在起始位置之前插入）、0（要删除的项数）、要插入的那一项，如要插入多个项，可再传入第4、第5以至任意多个项。
+    - 插入：可向指定位置插入任意数量的项，最少3个参数，起始位置（在起始位置之前插入）、0（删除0项）、要插入的那一项，如要插入多个项，可再传入第4、第5以至任意多个项。
     - 替换：可向指定位置插入任意数量的项同时删除任意数量的项，最少3个参数，起始位置（从起始位置开始计算）、要删除的项数、要插入的那一项，如要插入多个项，可再传入第4、第5以至任意多个项，插入项数与删除项数不必一致。
 ```
 var colors = ['red', 'green', 'blue', 'pink'];
@@ -236,9 +262,9 @@ console.log(colors); //["green", "yellow", "yellowgreen", "white", "blue", "pink
 ```
 var values = [1, 2, 3, 4, 5, 4, 3, 2, 1];
 console.log(values.indexOf(4)); //3
-console.log(values.indexOf(4, 5)); //5
+console.log(values.indexOf(4, 5)); //5，从索引5开始向右查找4，找到了索引5的值就是4，返回索引5
 console.log(values.lastIndexOf(3)); //6
-console.log(values.lastIndexOf(5, 1)); //-1
+console.log(values.lastIndexOf(5, 1)); //-1，从索引1开始向左查找5，没找到，返回-1
 ```
 
 #### 迭代方法

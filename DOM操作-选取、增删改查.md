@@ -41,7 +41,7 @@ innerText:读模式下，innerText会按照由浅入深的顺序将子文档树�
     console.log(h2);
 
     var p = document.getElementsByClassName("bb");
-    console.log(p); //
+    console.log(p); 
 
     var div = document.getElementsByTagName("div");
     console.log(div);
@@ -151,6 +151,10 @@ element.classList.add("className");
 - 删除一个class
 ```
 element.classList.remove("className");
+```
+- 切换一个class
+```
+element.classList.toggle('kevin')
 ```
 ### 如何选中如下代码所有的li元素？ 如何选中btn元素？
 ```

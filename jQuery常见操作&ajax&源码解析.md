@@ -1,4 +1,6 @@
 ###  jQuery 中， $(document).ready()是什么意思？
+(jQuery的load事件对应JS的onload事件，jQuery的ready事件对应JS的DOMContentLoaded事件，分别表示页面所有资源加载完成和页面DOM结构解析完成)
+
 当DOM准备就绪时会发生ready事件，并执行ready內的函数。
 由于该事件在文档就绪后就发生，所以正确做法是将所有其他jQuery事件和函数置于该事件中。
 ready() 函数规定当 ready 事件发生时执行的代码，ready() 函数仅能用于当前文档，因此无需选择器。

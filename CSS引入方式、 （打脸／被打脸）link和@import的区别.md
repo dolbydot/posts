@@ -1,7 +1,6 @@
 ## 三种引入方式：
 1、内联样式：直接写在元素开始标签的style属性中，如
 `<div style="background:red;height:100px;"></div>`
-
 2、内部样式表：放在head元素内的style标签中，如
 ```html
 <head>
@@ -11,7 +10,6 @@ body {background-image: url("images/back40.gif");}
 </style>
 </head>
 ```
-
 3、外部样式表：扩展名为.css的文件,文件中不能包含任何html标签，外部样式表的引入又分为两种情况：
 
 - 放置于head元素内的link标签中，如：

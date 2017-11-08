@@ -3,7 +3,7 @@
  var fnArr = [];
     for (var i = 0; i < 10; i ++) {
         fnArr[i] =  function(){
-    	    return i;
+            return i;
         };
     }
     console.log( fnArr[3]() );  //10
@@ -103,6 +103,42 @@ Car.getStatus();  //'stop';
 //Car.speed;  //error
 ```
 
+### 使用 localStorage封装一个 Storage 对象，达到如下效果
+```
+var Storage = (function () {
+    return {
+        set: function (key, values, expiredSeconds) {
+            //设置的是一个JSON格式的字符串
+            localStorage[key] = JSON.stringify({
+                value: values,
+                expired: expiredSeconds === undefined ? undefined : Date.now() + 1000 * expiredSeconds//如果不存在第三个参数(即数据永久有效)，返回undefined，如果存在，返回当前时间加上设定的时间(即生效截止日期)
+
+            })
+        },
+        get: function (key) {
+            if (localStorage[key] === undefined) {
+                return//如果localStorage中只有键名没有对应键值，则直接return undefined，如Storage.set('name'); console.log(Storage.get('name'))  ==>undefined
+            }
+            //获取的是一个js对象
+            var obj = JSON.parse(localStorage[key])//localStorage得到的键值是一个JSON格式的字符串，obj为JSON字符串反序列化得到的js对象
+            if (obj.expired === undefined || Date.now() < obj.expired) {//如果expired没有被设置过，即永久有效时，或者当前时间小于设置时间，即还在有效期内时，返回js对象的值
+                return obj.value
+            } else {//否则删除键值
+                delete localStorage[key]//删除键值后再获取键值得到的是undefined
+            }
+        }
+    }
+})()
+
+Storage.set('name', '饥人谷')
+Storage.set('age', 2, 30);  //设置 name 字段存储的值为'饥人谷'
+Storage.set('teachers', ['ruoyu', 'fangfang', 'tom'], 60)
+
+console.log(Storage.get('name'))  // ‘饥人谷’
+console.log(Storage.get('age'))    //  如果不超过30秒，返回数字类型的2；如果超过30秒，返回 undefined，并且 localStorage 里清除 age 字段
+console.log(Storage.get('teachers'))  //如果不超过60秒，返回数组； 如果超过60秒，返回undefined
+```
+
 ### 下面这段代码输出结果是? 为什么?
 ```
 var a = 1;
@@ -152,10 +188,10 @@ console.log(flag);
 ### 下面这段代码输出？如何输出delayer: 0, delayer:1...（使用闭包来实现）
 ```
 for(var i=0;i<5;i++){
-	setTimeout(function(){
+    setTimeout(function(){
          console.log('delayer:' + i );//delayer:5,delayer:5,delayer:5,delayer:5,delayer:5
-	}, 0);
-	console.log(i);//0,1,2,3,4
+    }, 0);
+    console.log(i);//0,1,2,3,4
 }
 ```
 - 首先打印外层的console.log(i)得到输出依次为0，1，2，3，4
@@ -173,14 +209,126 @@ for (var i = 0; i < 5; i++) {
 }
 ```
 
+### 如何获取图片的真实宽高
+```
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script src="jquery.min.js"></script>  -->
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div>
+        ![](http://upload-images.jianshu.io/upload_images/6851923-b0f3eadfdd4257c3.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+    </div>
+
+    <script>
+        // JS写法一
+        function $(selector) {
+            return document.querySelector(selector);
+        }
+        $('img').onload = function () {
+            console.log(this.width) //打印$('img).width结果相同
+            console.log(this.height)
+        }
+
+        //JS写法二
+        // var img = document.querySelector('img')
+        // img.addEventListener('load', function () {
+        //     console.log(this.width) //打印$('img).width结果相同
+        //     console.log(this.height)
+        // })
+
+        //jQuery写法
+        // $('img').on('load', function () {
+        //     console.log($(this).width())
+        //     console.log($(this).height())
+        // })
+    </script>
+</body>
+
+</html>
+```
+
 ### 如何获取元素的真实宽高
 ```
-function getCss(curEle, attr) {
-    return window.getComputedStyle ? window.getComputedStyle(curEle, null)[attr] : curEle.currentStyle[attr];
-}
-getCss(ele, 'width');
-getCss(ele, 'height');
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script src="jquery.min.js"></script>  -->
+    <style>
+        div {
+            box-sizing: border-box;
+            width: 100px;
+            height: 100px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        div {
+            width: 200px;
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+    </div>
+
+    <script>
+        // JS写法一
+        // function $(selector) {
+        //     return document.querySelector(selector);
+        // }
+        // console.log($('div').offsetWidth)
+        // console.log($('div').offsetHeight)
+
+
+        // JS写法二
+        var div = document.querySelector('div')
+        function getStyle(curEle, attr) {
+            console.log(window.getComputedStyle(curEle)[attr])
+        }
+        getStyle(div, 'color')
+        getStyle(div, 'width')
+        getStyle(div, 'height')
+
+
+        // 或者
+        // function getStyle(curEle, attr) {
+        //     var relStyle = window.getComputedStyle ? window.getComputedStyle(curEle, null)[attr] : curEle.currentStyle[attr]//兼容低版本IE
+        //     console.log(relStyle)
+        // }
+        // getStyle(div, 'width');
+        // getStyle(div, 'height');
+    </script>
+</body>
+
+</html>
 ```
+
+### window.onload 和 document.onDOMContentLoaded 有什么区别
+当DOM结构加载解析完成会触发DOMContentLoaded事件；当页面上所有的DOM结构、样式表、脚本、图片、flash等资源都加载完成后会触发onload事件。
+二者触发时机不同，onload后触发。
+
+区分二者：
+当我们需要给一些元素绑定事件处理函数，但那个元素还没有加载到页面上，绑定事件已经执行完了，这时是没有效果的，这两个事件就是用来避免这样一种情况。
+将绑定的函数放在这两个事件的回调中，保证能在页面的某些元素加载完毕之后再绑定事件的函数。
+当然DOMContentLoaded机制更加合理，因为我们可以容忍图片，flash延迟加载，却不可以容忍看见内容后页面不可交互。
 
 ### URL 如何编码解码？为什么要编码？
 URL只能使用ASCII字符集通过因特网进行发送，也就是说URL中只能包含英文字母、阿拉伯数字和某些标点符号，不能使用其他文字和符号，这意味着如果URL中包含汉字就必须编码后使用。麻烦的是，RFC 1738没有规定具体的编码方法，而是交给应用程序（浏览器）自己决定。这导致"URL编码"成为了一个混乱的领域。
@@ -210,3 +358,7 @@ function isIOS() {
     return /iphone|ipad/i.test(navigator.userAgent)
 }
 ```
+
+-----
+*参考资料*：
+[*从onload和DOMContentLoaded谈起*](http://www.cnblogs.com/hh54188/archive/2013/03/01/2939426.html)
